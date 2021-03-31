@@ -10,9 +10,14 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
+- task: AzurePowerShell@5
+  inputs:
+    azureSubscription: 'script-connection'
+    ScriptType: 'FilePath'
+    ScriptPath: './Deploy-AzTemplate.ps1'
+    ScriptArguments: -Location 'centralus' -ResourceGroupName 'demogroup' -TemplateFile templates\mainTemplate.json
+    azurePowerShellVersion: 'LatestVersion'
+    
 - script: |
     echo Add other tasks to build, test, and deploy your project.
     echo See https://aka.ms/yaml
